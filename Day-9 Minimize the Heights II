@@ -1,0 +1,22 @@
+class Solution {
+    int getMinDiff(int[] arr, int k) {
+        Arrays.sort(arr);
+        int n =arr.length;
+        
+        int a=arr[n-1];
+        int b=arr[0];
+        int c=arr[n-1]-arr[0];
+        
+        for(int i=1;i<n;i++){
+            a=Math.max(arr[n-1]-k, arr[i-1]+k);
+            b=Math.min(arr[0]+k,arr[i]-k);
+            
+            if(b<0){
+                continue;
+            }
+            
+            c=Math.min(c, a-b);
+        }
+        return c;
+    }
+}
