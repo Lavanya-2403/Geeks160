@@ -1,0 +1,36 @@
+
+class Solution {
+    public int circularSubarraySum(int arr[]) {
+
+        int n=arr.length;
+        
+        int max= kadane(arr);
+        
+        int totalsum=0;
+        for(int i=0;i<n;i++){
+            totalsum +=arr[i];
+            arr[i] = -arr[i];
+        }
+        
+        int max_inverse = kadane(arr);
+        int max_circular = totalsum + max_inverse;
+        
+        if(max_circular == 0){
+            return max;
+        }
+        return Math.max(max,max_circular);
+    }
+    
+    private int kadane(int[]arr){
+        int  b= arr[0];
+        int c =arr[0];
+        
+        for(int i=1;i<arr.length;i++){
+            b = Math.max(arr[i], b+arr[i]);
+            
+            c = Math.max(c, b);
+            
+        }
+        return c;
+    }
+}
