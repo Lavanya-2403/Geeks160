@@ -1,0 +1,73 @@
+
+class Solution{
+    public static boolean isPossible(int[] stalls, int k, int mid){
+        int cowplc = 1;
+        int laspo = stalls[0];
+        for(int i =1; i<stalls.length;i++){
+            if(stalls[i] - laspo >= mid){
+                cowplc++;
+                laspo = stalls[i];
+            }
+            
+            if(cowplc >= k){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public static int aggressiveCows(int[] stalls, int k){
+        quickSort(stalls, 0, stalls.length-1);
+        
+        int low =1;
+        int high = stalls[stalls.length-1]- stalls[0];
+        int result = 0;
+        
+        while(low <=high){
+            int mid = low + (high-low)/2;
+            
+            if(isPossible(stalls, k, mid)){
+                result = mid;
+                low= mid+1;
+            }else{
+                high= mid-1;
+            }
+        }
+        
+        return result;
+    }
+    
+    
+    
+    private static void quickSort(int[] arr, int low, int high){
+        if(low < high){
+            int pi= partition(arr, low, high);
+            quickSort(arr, low, pi-1);
+            quickSort(arr, pi+1, high);
+        }
+    }
+    
+    
+    
+    private static int partition(int[] arr, int low, int high){
+        int pivot = arr[high];
+        int i= low -1;
+        
+        for(int j = low;j<high;j++){
+            if (arr[j] <= pivot){
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        
+        swap(arr, i+1,high);
+        return i+1;
+    }
+    
+    private static void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
